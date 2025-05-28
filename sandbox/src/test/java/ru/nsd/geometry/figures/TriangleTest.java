@@ -7,11 +7,11 @@ public class TriangleTest {
 
     @Test
     void canCalculateArea(){
-        var result = Triangle.triangleAriaCalc(2.2, 2.2, 1.3);
-        Assertions.assertEquals(1.37, result);
+        var result = Triangle.Aria();
+        Assertions.assertEquals(6.0, result);
     }
     @Test
     void canCalculatePerimetr() {
-        Assertions.assertEquals(23.9, Triangle.trianglePerimetrCalc(8.0, 8.9, 7.0));
+        Assertions.assertEquals(12., Triangle.Perimetr());
     }
 }
