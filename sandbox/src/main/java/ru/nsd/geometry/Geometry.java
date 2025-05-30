@@ -24,7 +24,7 @@ public class Geometry {
         double side = 10.;
         var square14 = new Square14(side);
         System.out.println("Периметр квадрата составляет "+ triangle.perimetr() + " см");
-        System.out.println("Площадь квадрата со стороной " + side + "см. составляет "+ square14.area() + " кв.см");
+        System.out.println("Площадь квадрата со стороной " + side + "см.  составляет "+ square14.area() + " кв.см");
 
         }
     }
