@@ -12,7 +12,7 @@ public class Rectangle14Test {
     @Test
     void area(){
         var rectangle14 = new Rectangle14(2., 5.);
-        Assertions.assertEquals(20., rectangle14.area());
+        Assertions.assertEquals(10., rectangle14.area());
     }
 
 }
