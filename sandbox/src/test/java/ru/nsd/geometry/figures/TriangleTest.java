@@ -16,4 +16,23 @@ public class TriangleTest {
         var triangle = new Triangle(2.,2.,2.);
         Assertions.assertEquals(6., triangle.perimetr());
     }
+    @Test
+    void cannotHaveNegativeSide() {
+        try {
+            new Triangle(5., 3., -4);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Triangle with negative side(s)");
+        }
+    }
+    @Test
+    void cannotHaveShortSides(){
+        try {
+            new Triangle(5., 10., 3);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Triangle with short side(s)");
+        }
+    }
+
 }
