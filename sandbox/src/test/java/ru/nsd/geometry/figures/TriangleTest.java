@@ -34,5 +34,11 @@ public class TriangleTest {
             System.out.println("Triangle with short side(s)");
         }
     }
+    @Test
+    void testEquality(){
+        var t1 = new Triangle(1.,2.,3.);
+        var t2 = new Triangle(1.,3.,2.);
+        Assertions.assertEquals(t1, t2);
+    }
 
 }
