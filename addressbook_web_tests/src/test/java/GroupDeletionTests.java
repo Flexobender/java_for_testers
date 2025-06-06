@@ -1,44 +1,68 @@
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 
-import java.util.*;
+import java.util.NoSuchElementException;
 
 public class GroupDeletionTests {
-  private WebDriver driver;
-  private Map<String, Object> vars;
-  JavascriptExecutor js;
-  @BeforeEach
-  public void setUp() {
-    driver = new ChromeDriver();
-    js = (JavascriptExecutor) driver;
-    vars = new HashMap<String, Object>();
-  }
-  @AfterEach
-  public void tearDown() {
-    driver.quit();
-  }
-  @Test
-  public void delGr() {
-    driver.get("http://localhost/addressbook/");
-    driver.manage().window().setSize(new Dimension(1564, 823));
-    driver.findElement(By.name("user")).click();
-    driver.findElement(By.name("user")).sendKeys("admin");
-    driver.findElement(By.name("pass")).click();
-    driver.findElement(By.name("pass")).sendKeys("secret");
-    driver.findElement(By.xpath("//input[@value=\'Login\']")).click();
-    driver.findElement(By.linkText("groups")).click();
+    private static WebDriver driver;
 
-    driver.findElement(By.name("selected[]")).click();
-    driver.findElement(By.xpath("(//input[@name=\'selected[]\'])[2]")).click();
-    driver.findElement(By.name("delete")).click();
-    driver.findElement(By.linkText("group page")).click();
-    driver.findElement(By.linkText("Logout")).click();
 
-  }
+    @BeforeEach
+    public void setUp() {
+        if (driver == null) {
+            driver = new ChromeDriver();
+            Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
+            driver.get("http://localhost/addressbook/");
+            driver.manage().window().setSize(new Dimension(1564, 823));
+            driver.findElement(By.name("user")).click();
+            driver.findElement(By.name("user")).sendKeys("admin");
+            driver.findElement(By.name("pass")).click();
+            driver.findElement(By.name("pass")).sendKeys("secret");
+            driver.findElement(By.xpath("//input[@value=\'Login\']")).click();
+        }
+
+    }
+
+    @AfterEach
+    public void tearDown() {
+//        driver.quit();
+    }
+
+    @Test
+    public void canDeleteGroup() {
+
+        if (!isElementPresent(By.name("new"))) driver.findElement(By.linkText("groups")).click();
+
+        if (!isElementPresent(By.name("selected[]"))) {
+
+            driver.findElement(By.name("new")).click();
+            driver.findElement(By.name("group_name")).click();
+            driver.findElement(By.name("group_name")).sendKeys("");
+            driver.findElement(By.name("group_header")).click();
+            driver.findElement(By.name("group_header")).sendKeys("");
+            driver.findElement(By.name("group_footer")).click();
+            driver.findElement(By.name("group_footer")).sendKeys("");
+            driver.findElement(By.name("submit")).click();
+            driver.findElement(By.linkText("group page")).click();
+        }
+
+
+        driver.findElement(By.name("selected[]")).click();
+        driver.findElement(By.name("delete")).click();
+        driver.findElement(By.linkText("group page")).click();
+
+
+    }
+
+    private boolean isElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException exception) {
+            return false;
+        }
+    }
 }
