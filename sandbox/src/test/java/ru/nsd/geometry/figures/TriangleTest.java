@@ -36,7 +36,7 @@ public class TriangleTest {
     }
     @Test
     void testEquality(){
-        var t1 = new Triangle(3.,1.,2.);
+        var t1 = new Triangle(2.,1.,3.);
         var t2 = new Triangle(1.,3.,2.);
         Assertions.assertEquals(t1, t2);
     }
