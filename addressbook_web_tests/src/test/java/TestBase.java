@@ -1,3 +1,4 @@
+import model.GroupData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
@@ -6,17 +7,20 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.time.Duration;
+
 public class TestBase {
     protected static WebDriver driver;
 
-    protected static void groupCreation(String Group1_name, String Group1_header, String Group1_footer) {
+
+    protected static void groupCreation(GroupData group) {
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
-        driver.findElement(By.name("group_name")).sendKeys(Group1_name);
+        driver.findElement(By.name("group_name")).sendKeys(group.name());
         driver.findElement(By.name("group_header")).click();
-        driver.findElement(By.name("group_header")).sendKeys(Group1_header);
+        driver.findElement(By.name("group_header")).sendKeys(group.header());
         driver.findElement(By.name("group_footer")).click();
-        driver.findElement(By.name("group_footer")).sendKeys(Group1_footer);
+        driver.findElement(By.name("group_footer")).sendKeys(group.footer());
         driver.findElement(By.name("submit")).click();
         driver.findElement(By.linkText("group page")).click();
     }
@@ -31,6 +35,7 @@ public class TestBase {
     public void setUp() {
         if (driver == null) {
             driver = new ChromeDriver();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get("http://localhost/addressbook/");
             driver.manage().window().setSize(new Dimension(1564, 823));
@@ -66,7 +71,12 @@ public class TestBase {
     protected void isGroupPresent() {
         if (!isElementPresent(By.name("selected[]"))) {
 
-            groupCreation("","","");
+            groupCreation(new GroupData("", "", ""));
+        }
+    }
+    protected void openContactPage() {
+        if (isElementPresent(By.linkText("add new"))) {
+            driver.findElement(By.linkText("add new")).click();
         }
     }
 }
