@@ -5,6 +5,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
 
@@ -37,9 +39,18 @@ public class ApplicationManager {
     }
 
 
-    public void init() {
+    public void init(String browser) {
         if (driver == null) {
-            driver = new ChromeDriver();
+            if(browser.equals("chrome")) {
+                driver = new ChromeDriver();
+            } else if (browser.equals("firefox")) {
+                driver = new FirefoxDriver();
+            } else if (browser.equals("edge")) {
+                driver = new EdgeDriver();
+            } else{
+                throw new IllegalArgumentException(String.format("Unknown browser %s",browser));
+            }
+
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get("http://localhost/addressbook/");

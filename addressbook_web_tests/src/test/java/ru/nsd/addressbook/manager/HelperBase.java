@@ -1,7 +1,6 @@
 package ru.nsd.addressbook.manager;
 
 import org.openqa.selenium.By;
-import ru.nsd.addressbook.model.GroupData;
 
 public class HelperBase {
     protected final ApplicationManager manager;
