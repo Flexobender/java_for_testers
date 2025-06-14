@@ -1,3 +1,5 @@
+package ru.nsd.addressbook.tests;
+
 import org.junit.jupiter.api.Test;
 
 public class GroupDeletionTests extends TestBase {
@@ -7,10 +9,10 @@ public class GroupDeletionTests extends TestBase {
     @Test
     public void canDeleteGroup() {
 
-        openGroupsPage();
+        app.group().openGroupsPage();
 
-        isGroupPresent();
-        deleteGroup();
+        app.group().isGroupPresent();
+        app.group().deleteGroup();
     }
 
 }

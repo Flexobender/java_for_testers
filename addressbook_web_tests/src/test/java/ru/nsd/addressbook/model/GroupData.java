@@ -1,4 +1,4 @@
-package model;
+package ru.nsd.addressbook.model;
 
 public record GroupData(String name, String header, String footer) {
 
