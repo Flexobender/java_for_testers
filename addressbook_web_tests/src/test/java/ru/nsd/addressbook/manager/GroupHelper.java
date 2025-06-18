@@ -1,7 +1,10 @@
 package ru.nsd.addressbook.manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import ru.nsd.addressbook.model.GroupData;
+
+import java.util.List;
 
 public class GroupHelper extends HelperBase{
 
@@ -18,13 +21,22 @@ public class GroupHelper extends HelperBase{
 
         fillIn(group.name(), "group_footer");
         click("submit");
+        goToGroupPage();
+    }
+
+
+    public   void deleteGroups() {
+        selectGroup();
+        click("delete");
+        goToGroupPage();
+    }
+
+    public void goToGroupPage() {
         clickLink("group page");
     }
 
-    public   void deleteGroup() {
+    public void selectGroup() {
         click("selected[]");
-        click("delete");
-        clickLink("group page");
     }
 
     public void openGroupsPage() {
@@ -33,10 +45,20 @@ public class GroupHelper extends HelperBase{
         }
     }
 
-    public void isGroupPresent() {
-        if (!manager.isElementPresent(By.name("selected[]"))) {
+    public int getCount() {
+        openGroupsPage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
 
-            groupCreation(new GroupData("", "", ""));
+    public void deleteAllGroups() {
+        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+        selectAllGroups(checkboxes);
+        click("delete");
+    }
+
+    private static void selectAllGroups(List<WebElement> checkboxes) {
+        for (var checkbox : checkboxes){
+          checkbox.click();
         }
     }
 }

@@ -11,7 +11,7 @@ public class ContactHelper extends HelperBase{
     }
 
     public   void contactCreation(ContactData contactData) {
-
+        openContactPage();
         fillIn(contactData.firstname(),"firstname");
         fillIn(contactData.address(),"address");
         fillIn(contactData.mobile(),"mobile");
@@ -24,6 +24,11 @@ public class ContactHelper extends HelperBase{
     public void openContactPage() {
         if (manager.isElementPresent(By.linkText("add new"))) {
             clickLink("add new");
+        }
+    }
+    public void openHomePage() {
+        if (manager.isElementPresent(By.linkText("home"))) {
+            clickLink("home");
         }
     }
 
@@ -39,5 +44,10 @@ public class ContactHelper extends HelperBase{
             openContactPage();
             contactCreation(new ContactData("test", "test", "test", "test"));
         }
+    }
+
+    public int getCount() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
     }
 }
