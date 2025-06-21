@@ -24,4 +24,7 @@ public class HelperBase {
     protected void clickXpath(String xpath) {
         manager.driver.findElement(By.xpath(xpath)).click();
     }
+    protected void clickCssSelector(String cssSelector) {
+        manager.driver.findElement(By.cssSelector(cssSelector)).click();
+    }
 }

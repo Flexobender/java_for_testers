@@ -3,6 +3,9 @@ package ru.nsd.addressbook.manager;
 import org.openqa.selenium.By;
 import ru.nsd.addressbook.model.ContactData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactHelper extends HelperBase{
 
 
@@ -12,6 +15,7 @@ public class ContactHelper extends HelperBase{
 
     public   void contactCreation(ContactData contactData) {
         openContactPage();
+        fillIn(contactData.lastname(),"lastname");
         fillIn(contactData.firstname(),"firstname");
         fillIn(contactData.address(),"address");
         fillIn(contactData.mobile(),"mobile");
@@ -32,22 +36,41 @@ public class ContactHelper extends HelperBase{
         }
     }
 
-    public void contactDeletion() {
-        click("selected[]");
+    public void contactDeletion(ContactData contact) {
+        selectContact(contact);
+        //click("selected[]");
         clickXpath("//input[@value=\'Delete\']");
+        clickLink("home");
 
+    }
+
+    private void selectContact(ContactData contact) {
+        clickCssSelector(String.format("input[value='%s']", contact.id()));
     }
 
     public void isContactPresent() {
 
         if (!manager.isElementPresent(By.name("selected[]"))){
             openContactPage();
-            contactCreation(new ContactData("test", "test", "test", "test"));
+            contactCreation(new ContactData("", "Куклачев", "test", "test", "test", "test"));
         }
     }
 
     public int getCount() {
         openHomePage();
         return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getList() {
+        var contacts = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.name("entry"));
+        for (var tr : trs){
+            var lastname = tr.findElements(By.tagName("td")).get(1).getText();
+            var firstname = tr.findElements(By.tagName("td")).get(2).getText();
+
+            var id = tr.findElement(By.tagName("input")).getAttribute("id");
+            contacts.add(new ContactData(id, lastname, firstname,"","",""));
+        }
+        return contacts;
     }
 }

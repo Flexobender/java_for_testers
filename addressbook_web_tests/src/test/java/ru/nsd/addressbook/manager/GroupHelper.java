@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import ru.nsd.addressbook.model.GroupData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupHelper extends HelperBase{
@@ -25,8 +26,8 @@ public class GroupHelper extends HelperBase{
     }
 
 
-    public   void deleteGroups() {
-        selectGroup();
+    public   void deleteGroups(GroupData group) {
+        selectGroup(group);
         click("delete");
         goToGroupPage();
     }
@@ -35,8 +36,8 @@ public class GroupHelper extends HelperBase{
         clickLink("group page");
     }
 
-    public void selectGroup() {
-        click("selected[]");
+    public void selectGroup(GroupData group) {
+        clickCssSelector(String.format("input[value='%s']", group.id()));
     }
 
     public void openGroupsPage() {
@@ -60,5 +61,18 @@ public class GroupHelper extends HelperBase{
         for (var checkbox : checkboxes){
           checkbox.click();
         }
+    }
+
+    public List<GroupData> getList() {
+        var groups = new ArrayList<GroupData>();
+        var spans = manager.driver.findElements(By.cssSelector("span.group"));
+        for (var span : spans){
+            var name = span.getText();
+            var checkbox = span.findElement(By.name("selected[]"));
+            groups.add(new GroupData()
+                    .withId(checkbox.getAttribute("value"))
+                    .withName(name));
+        }
+        return groups;
     }
 }

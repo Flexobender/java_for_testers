@@ -24,7 +24,7 @@ public class ApplicationManager {
         return session;
     }
 
-    public GroupHelper group() {
+    public GroupHelper groups() {
         if (group == null) {
             group = new GroupHelper(this);
         }

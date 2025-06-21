@@ -17,22 +17,22 @@ class ContactCreationTests extends TestBase {
             for(var address : List.of("address","")){
                 for(var mobile : List.of("mobile","")){
                     for(var email : List.of("email","")){
-                    result.add(new ContactData(firstName,address,mobile,email));
+                    result.add(new ContactData("", "Куклачев", firstName,address,mobile,email));
                 }
             }
         }
         }
         for(int i=0; i < 5; i++){
-            result.add(new ContactData(randomString( i * 10), randomString( i * 10), randomString( i * 10), randomString( i * 10)));
+            result.add(new ContactData("", "Куклачев", randomString( i * 10), randomString( i * 10), randomString( i * 10), randomString( i * 10)));
         }
         return result;
     }
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<>(List.of(
-                new ContactData("first name'","address", "mobile", "email"),
-                new ContactData("first name","address'", "mobile", "email"),
-                new ContactData("first name","address", "mobile'", "email"),
-                new ContactData("first name","address", "mobile", "email'")));
+                new ContactData("", "Куклачев", "first name'","address", "mobile", "email"),
+                new ContactData("", "Куклачев", "first name","address'", "mobile", "email"),
+                new ContactData("", "Куклачев", "first name","address", "mobile'", "email"),
+                new ContactData("", "Куклачев", "first name","address", "mobile", "email'")));
 
         return result;
     }
@@ -42,7 +42,7 @@ class ContactCreationTests extends TestBase {
 
 
         int contactCount = app.contact().getCount();
-        app.contact().contactCreation(new ContactData("firstname", "address", "mobile", "mail"));
+        app.contact().contactCreation(new ContactData("", "Куклачев", "firstname", "address", "mobile", "mail"));
         int newContactCount = app.contact().getCount();
         Assertions.assertEquals(contactCount + 1, newContactCount);
     }
