@@ -1,6 +1,8 @@
 package ru.nsd.addressbook.manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import ru.nsd.addressbook.model.ContactData;
 
 import java.util.ArrayList;
@@ -72,5 +74,14 @@ public class ContactHelper extends HelperBase{
             contacts.add(new ContactData(id, lastname, firstname,"","",""));
         }
         return contacts;
+    }
+
+    public void modifyContact(ContactData contact, ContactData testData) {
+        openHomePage();
+        manager.driver.findElement(By.id(contact.id())).findElement(By.xpath("../../td[8]/a/img")).click();
+        fillIn(testData.lastname(), "lastname");
+        fillIn(testData.firstname(), "firstname");
+        click("update");
+        openHomePage();
     }
 }

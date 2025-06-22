@@ -15,22 +15,26 @@ public class GroupHelper extends HelperBase{
 
     public  void groupCreation(GroupData group) {
         click("new");
-
-        fillIn(group.name(), "group_name");
-
-        fillIn(group.name(), "group_header");
-
-        fillIn(group.name(), "group_footer");
+        fillGroupForm(group);
         click("submit");
         goToGroupPage();
     }
-
 
     public   void deleteGroups(GroupData group) {
         selectGroup(group);
         click("delete");
         goToGroupPage();
     }
+
+    public void modifyGroup(GroupData group, GroupData modifiedGroup) {
+        openGroupsPage();
+        selectGroup(group);
+        initGroupModification();
+        fillGroupForm(modifiedGroup);
+        submitGroupModification();
+        goToGroupPage();
+    }
+
 
     public void goToGroupPage() {
         clickLink("group page");
@@ -74,5 +78,19 @@ public class GroupHelper extends HelperBase{
                     .withName(name));
         }
         return groups;
+    }
+
+    private void submitGroupModification() {
+        click("update");
+    }
+
+    private void fillGroupForm(GroupData group) {
+        fillIn(group.name(), "group_name");
+        fillIn(group.name(), "group_header");
+        fillIn(group.name(), "group_footer");
+    }
+
+    private void initGroupModification() {
+        manager.driver.findElement(By.name("edit")).click();
     }
 }

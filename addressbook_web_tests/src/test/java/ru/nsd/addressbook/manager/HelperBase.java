@@ -18,7 +18,9 @@ public class HelperBase {
     }
 
     protected void fillIn(String text, String target) {
-        manager.driver.findElement(By.name(target)).sendKeys(text);
+        var element = manager.driver.findElement(By.name(target));
+        element.clear();
+        element.sendKeys(text);
     }
 
     protected void clickXpath(String xpath) {
