@@ -22,6 +22,7 @@ public class ContactHelper extends HelperBase{
         fillIn(contactData.address(),"address");
         fillIn(contactData.mobile(),"mobile");
         fillIn(contactData.email(),"email");
+        attach(By.name("photo"), contactData.file());
         clickXpath("(//input[@name=\'submit\'])[2]");
         clickLink("home page");
 
@@ -54,7 +55,7 @@ public class ContactHelper extends HelperBase{
 
         if (!manager.isElementPresent(By.name("selected[]"))){
             openContactPage();
-            contactCreation(new ContactData("", "Куклачев", "test", "test", "test", "test"));
+            contactCreation(new ContactData("", "Куклачев", "test", "test", "test", "test", ""));
         }
     }
 
@@ -71,7 +72,7 @@ public class ContactHelper extends HelperBase{
             var firstname = tr.findElements(By.tagName("td")).get(2).getText();
 
             var id = tr.findElement(By.tagName("input")).getAttribute("id");
-            contacts.add(new ContactData(id, lastname, firstname,"","",""));
+            contacts.add(new ContactData(id, lastname, firstname,"","","",""));
         }
         return contacts;
     }

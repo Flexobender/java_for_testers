@@ -2,6 +2,8 @@ package ru.nsd.addressbook.manager;
 
 import org.openqa.selenium.By;
 
+import java.nio.file.Paths;
+
 public class HelperBase {
     protected final ApplicationManager manager;
 
@@ -28,5 +30,8 @@ public class HelperBase {
     }
     protected void clickCssSelector(String cssSelector) {
         manager.driver.findElement(By.cssSelector(cssSelector)).click();
+    }
+    protected void attach(By locator, String file){
+        manager.driver.findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }
 }

@@ -14,7 +14,7 @@ import java.util.Random;
 public class ContactModificationTests extends TestBase {
     @Test
     void canModifyContact(){
-        if(app.contact().getCount() == 0) app.contact().contactCreation(new ContactData("", "", "", "","",""));
+        if(app.contact().getCount() == 0) app.contact().contactCreation(new ContactData("", "", "", "","","",""));
         var oldContacts = app.contact().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
