@@ -51,13 +51,7 @@ public class ContactHelper extends HelperBase{
         clickCssSelector(String.format("input[value='%s']", contact.id()));
     }
 
-    public void isContactPresent() {
 
-        if (!manager.isElementPresent(By.name("selected[]"))){
-            openContactPage();
-            contactCreation(new ContactData("", "Куклачев", "test", "test", "test", "test", ""));
-        }
-    }
 
     public int getCount() {
         openHomePage();

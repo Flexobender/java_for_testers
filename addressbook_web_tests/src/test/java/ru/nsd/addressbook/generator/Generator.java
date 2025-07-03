@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import static ru.nsd.addressbook.common.CommonFunctions.randomString;
 
@@ -29,6 +30,7 @@ public class Generator {
     String format;
     @Parameter(names={"--count", "-n"})
     int count;
+    private Properties properties ;
     public static void main(String[] args) throws IOException {
        var generator = new Generator();
         JCommander.newBuilder()
@@ -59,7 +61,7 @@ public class Generator {
             result.add(new ContactData()
                     .withId(randomString( i * 10))
                     .withLastAndFirstNames(randomString( i * 10), randomString( i * 10))
-                    .withPhoto(CommonFunctions.randomFile("src/test/resources/images")));
+                    .withPhoto(CommonFunctions.randomFile(properties.getProperty("paths.images"))));
         }
         return result;
 

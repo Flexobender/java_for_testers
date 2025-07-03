@@ -16,8 +16,6 @@ public class ApplicationManager {
     private LoginHelper session;
     private GroupHelper group;
     private ContactHelper contact;
-
-
     public LoginHelper session() {
         if (session == null) {
             session = new LoginHelper(this);
@@ -39,18 +37,19 @@ public class ApplicationManager {
         return contact;
     }
 
-private Properties properties ;
+    public Properties properties;
+
     public void init(String browser, Properties properties) {
         this.properties = properties;
         if (driver == null) {
-            if(browser.equals("chrome")) {
+            if (browser.equals("chrome")) {
                 driver = new ChromeDriver();
             } else if (browser.equals("firefox")) {
                 driver = new FirefoxDriver();
             } else if (browser.equals("edge")) {
                 driver = new EdgeDriver();
-            } else{
-                throw new IllegalArgumentException(String.format("Unknown browser %s",browser));
+            } else {
+                throw new IllegalArgumentException(String.format("Unknown browser %s", browser));
             }
 
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
@@ -61,7 +60,7 @@ private Properties properties ;
         }
     }
 
-        public boolean isElementPresent(By locator) {
+    public boolean isElementPresent(By locator) {
         try {
             driver.findElement(locator);
             return true;

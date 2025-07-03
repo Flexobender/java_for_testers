@@ -8,16 +8,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.nsd.addressbook.common.CommonFunctions;
 import ru.nsd.addressbook.model.ContactData;
-import ru.nsd.addressbook.model.GroupData;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 
 class ContactCreationTests extends TestBase {
+
     public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
 //        for (var firstName : List.of("firstName","")){
@@ -43,10 +44,36 @@ class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<>(List.of(
-                new ContactData("", "Куклачев", "first name'", "address", "mobile", "email", ""),
-                new ContactData("", "Куклачев", "first name", "address'", "mobile", "email", ""),
-                new ContactData("", "Куклачев", "first name", "address", "mobile'", "email", ""),
-                new ContactData("", "Куклачев", "first name", "address", "mobile", "email'", "")));
+                new ContactData(app.properties.getProperty("contact.id") + "",
+                        app.properties.getProperty("contact.lastname") + "'",
+                        app.properties.getProperty("contact.firstname") + "",
+                        app.properties.getProperty("contact.address") + "",
+                        app.properties.getProperty("contact.mobile") + "",
+                        app.properties.getProperty("contact.email") + "",
+                        CommonFunctions.randomFile(app.properties.getProperty("paths.images"))),
+                new ContactData(app.properties.getProperty("contact.id") + "",
+                        app.properties.getProperty("contact.lastname") + "",
+                        app.properties.getProperty("contact.firstname") + "'",
+                        app.properties.getProperty("contact.address") + "",
+                        app.properties.getProperty("contact.mobile") + "",
+                        app.properties.getProperty("contact.email") + "",
+                        CommonFunctions.randomFile(app.properties.getProperty("paths.images"))),
+                new ContactData(app.properties.getProperty("contact.id") + "",
+                        app.properties.getProperty("contact.lastname") + "",
+                        app.properties.getProperty("contact.firstname") + "",
+                        app.properties.getProperty("contact.address") + "'",
+                        app.properties.getProperty("contact.mobile") + "",
+                        app.properties.getProperty("contact.email") + "",
+                        CommonFunctions.randomFile(app.properties.getProperty("paths.images"))),
+                new ContactData(app.properties.getProperty("contact.id") + "",
+                        app.properties.getProperty("contact.lastname") + "",
+                        app.properties.getProperty("contact.firstname") + "",
+                        app.properties.getProperty("contact.address") + "",
+                        app.properties.getProperty("contact.mobile") + "'",
+                        app.properties.getProperty("contact.email") + "",
+                        CommonFunctions.randomFile(app.properties.getProperty("paths.images")))));
+
+
 
         return result;
     }

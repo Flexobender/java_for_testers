@@ -34,7 +34,7 @@ public class GroupCreationTests extends TestBase {
 //            }
 //        }
         var json = "";
-        try (var reader = new FileReader("groups.json");
+        try (var reader = new FileReader(app.properties.getProperty("groups.json"));
              var breader = new BufferedReader(reader)) {
             var line = breader.readLine();
             while (line != null) {
@@ -42,7 +42,7 @@ public class GroupCreationTests extends TestBase {
                 line = breader.readLine();
             }
         }
-//        var json = Files.readString(Paths.get("groups.json"));
+//      var json = Files.readString(Paths.get("groups.json"));
         ObjectMapper mapper = new ObjectMapper();
         var value = mapper.readValue(json, new TypeReference<List<GroupData>>() {});
         result.addAll(value);
@@ -51,7 +51,10 @@ public class GroupCreationTests extends TestBase {
 
     public static List<GroupData> negativeGroupProvider() {
         var result = new ArrayList<>(List.of(
-                new GroupData("", "group name'", "header", "footer")));
+                new GroupData(app.properties.getProperty("group.id") + "",
+                        app.properties.getProperty("group.name") + "'",
+                        app.properties.getProperty("group.header") + "",
+                        app.properties.getProperty("group.footer") + "")));
 
         return result;
     }
