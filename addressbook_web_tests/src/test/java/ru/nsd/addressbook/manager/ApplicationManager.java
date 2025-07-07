@@ -16,6 +16,10 @@ public class ApplicationManager {
     private LoginHelper session;
     private GroupHelper group;
     private ContactHelper contact;
+    public Properties properties;
+    private JdbcHelper jdbc;
+    private HibernateHelper hbm;
+
     public LoginHelper session() {
         if (session == null) {
             session = new LoginHelper(this);
@@ -37,7 +41,20 @@ public class ApplicationManager {
         return contact;
     }
 
-    public Properties properties;
+    public JdbcHelper jdbc() {
+        if (jdbc == null) {
+            jdbc = new JdbcHelper(this);
+        }
+        return jdbc;
+    }
+    public HibernateHelper hbm() {
+        if (hbm == null) {
+            hbm = new HibernateHelper(this);
+        }
+        return hbm;
+    }
+
+
 
     public void init(String browser, Properties properties) {
         this.properties = properties;

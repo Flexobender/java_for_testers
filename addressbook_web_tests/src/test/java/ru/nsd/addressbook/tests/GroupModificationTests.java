@@ -11,13 +11,13 @@ import java.util.Random;
 public class GroupModificationTests extends TestBase{
     @Test
     void canModifyGroup(){
-        if(app.groups().getCount() == 0) app.groups().groupCreation(new GroupData("", "", "", ""));
-        var oldGroups = app.groups().getList();
+        if(app.hbm().getGroupCount() == 0) app.hbm().groupCreation(new GroupData("", "", "", ""));
+        var oldGroups = app.hbm().getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
         var testData = new GroupData().withName("modified name");
         app.groups().modifyGroup(oldGroups.get(index), testData); // заменяем одну группу на новую
-        var newGroups = app.groups().getList();
+        var newGroups = app.hbm().getGroupList();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.set(index, testData.withId(oldGroups.get(index).id()));
         Comparator<GroupData> comparedById = (o1, o2) -> {

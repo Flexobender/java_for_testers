@@ -17,12 +17,12 @@ public class ContactHelper extends HelperBase{
 
     public   void contactCreation(ContactData contactData) {
         openContactPage();
-        fillIn(contactData.lastname(),"lastname");
-        fillIn(contactData.firstname(),"firstname");
+        fillIn(contactData.lastname(),"firstname"); // здесь какая то путаница с именем -фамилией
+        fillIn(contactData.firstname(),"lastname");
         fillIn(contactData.address(),"address");
         fillIn(contactData.mobile(),"mobile");
         fillIn(contactData.email(),"email");
-        attach(By.name("photo"), contactData.file());
+        attach(By.name("photo"), "src/test/resources/images/avatar.png");                //contactData.file());
         clickXpath("(//input[@name=\'submit\'])[2]");
         clickLink("home page");
 

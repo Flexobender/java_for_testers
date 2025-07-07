@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -59,6 +60,13 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
+    public static List<GroupData> singleRandomGroup() throws IOException {
+        return List.of(new GroupData()
+                .withName(CommonFunctions.randomString(10))
+                .withHeader(CommonFunctions.randomString(20))
+                .withFooter(CommonFunctions.randomString(30)));
+    }
+
 
     @ParameterizedTest
     @MethodSource("groupProvider")
@@ -78,5 +86,43 @@ public class GroupCreationTests extends TestBase {
         app.groups().groupCreation(group);
         int newGroupCount = app.groups().getCount();
         Assertions.assertEquals(groupCount, newGroupCount);
+    }
+// Тест на создание группы с проверками через jdbc
+    @ParameterizedTest
+    @MethodSource("singleRandomGroup")
+    public void canCreateGroupJdbc(GroupData group) {
+        var oldGroups = app.jdbc().getGroupList();
+        app.groups().openGroupsPage();
+        app.groups().groupCreation(group);
+        var newGroups = app.jdbc().getGroupList();
+        Comparator<GroupData> comparedById = (o1, o2) -> {
+            return  Integer.compare(Integer.parseInt(o1.id()),Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(comparedById);
+        var maxId = newGroups.get(newGroups.size() - 1).id();
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(maxId));
+        expectedList.sort(comparedById);
+
+        Assertions.assertEquals(newGroups, expectedList);
+    }
+    // Тест на создание группы с проверками через hibernate
+    @ParameterizedTest
+    @MethodSource("singleRandomGroup")
+    public void canCreateGroup(GroupData group) {
+        var oldGroups = app.hbm().getGroupList();
+        app.groups().openGroupsPage();
+        app.groups().groupCreation(group);
+        var newGroups = app.hbm().getGroupList();
+        Comparator<GroupData> comparedById = (o1, o2) -> {
+            return  Integer.compare(Integer.parseInt(o1.id()),Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(comparedById);
+        var maxId = newGroups.get(newGroups.size() - 1).id();
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(maxId));
+        expectedList.sort(comparedById);
+
+        Assertions.assertEquals(newGroups, expectedList);
     }
 }
