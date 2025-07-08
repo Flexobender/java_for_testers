@@ -49,9 +49,9 @@ public class HibernateHelper extends HelperBase {
     }
 
     public List<GroupData> getGroupList() {
-        return sessionFactory.fromSession(session -> {
-            return converList(session.createQuery("from GroupRecord", GroupRecord.class).list());
-        });
+        return converList(sessionFactory.fromSession(session -> {
+            return session.createQuery("from GroupRecord", GroupRecord.class).list();
+        }));
     }
 
     public long getGroupCount() {

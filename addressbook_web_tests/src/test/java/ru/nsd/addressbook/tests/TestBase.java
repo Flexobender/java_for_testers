@@ -1,5 +1,6 @@
 package ru.nsd.addressbook.tests;
 
+import org.junit.jupiter.api.AfterEach;
 import ru.nsd.addressbook.manager.ApplicationManager;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -20,6 +21,10 @@ public class TestBase {
 
             app.init(System.getProperty("browser", "chrome"), properties);
         }
+    }
+    @AfterEach
+    public void checkDataBaseConsistency(){
+        app.jdbc().checkConsistency();
     }
 
 }
